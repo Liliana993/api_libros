@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
 const ModelLibro = require('../models/libroModel');
+
+const authMiddleware = require('../middleware/authMiddleware');
+const errorMiddleware = require('../middleware/errorMiddleware');
+
 
 //obtener todos los libros
 router.get('/libros', async(req, res)=>{
@@ -9,7 +12,8 @@ router.get('/libros', async(req, res)=>{
         const libros = await ModelLibro.find();
         res.status(200).send(libros);
     }catch(error){
-        res.status(500).send({message: 'Error al obtener los libros'}, error);
+        /*res.status(500).send({message: 'Error al obtener los libros'}, error);*/
+        next(errorMiddleware);  // Delegamos el error al middleware de manejo de errores
     }
 })
 
@@ -30,7 +34,7 @@ router.get('/libros/:id', async(req, res) =>{
 });
 
 //Crear un nuevo Libro
-router.post('/libros', async(req, res)=>{
+router.post('/libros', authMiddleware, async(req, res)=>{
     const body = req.body;
     try{
         const nuevoLibro = await ModelLibro.create(body)
