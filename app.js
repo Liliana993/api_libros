@@ -1,7 +1,9 @@
+console.log('App Iniciando...')
+require('dotenv').config();
+
 const express = require('express');
 const dbConnect = require('./config/db');
 const app = express();
-const port = 3000;
 const librosRoutes = require('./routes/libro');
 
 //Middlewares
@@ -24,10 +26,10 @@ app.use(notFoundMiddleware); //Usamos el middleware de notfound para ruta no enc
 
 //conectar a la base de datos
 dbConnect().then(() =>{
-    app.listen(port, () =>{
-        console.log('El servidor esta corriendo en el puerto: ', port);
-    });
+        console.log('El servidor esta corriendo.')
 
 }).catch(err =>{
     console.log('No se ha podido conectar a la base de datos');
 });
+
+module.exports = app; //exportamos la app para delegarle el control a Vercel
