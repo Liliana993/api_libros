@@ -11,10 +11,7 @@ const notFoundMiddleware = require('./middleware/notFoundMiddleware');
 
 //Cors
 const cors = require('cors');
-const corsOptions = require('./config/corsOptions');
-
-//Cors
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(loggingMiddleware);//Usamos el middleware del logging en toda la app
 
