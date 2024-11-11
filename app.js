@@ -2,8 +2,8 @@ console.log('App Iniciando...')
 require('dotenv').config();
 
 const express = require('express');
-const dbConnect = require('./config/db');
 const app = express();
+const dbConnect = require('./config/db');
 const librosRoutes = require('./routes/libro');
 
 //Middlewares
@@ -20,9 +20,9 @@ app.use(loggingMiddleware);//Usamos el middleware del logging en toda la app
 app.use(express.json());
 app.use(librosRoutes);
 
-
-app.use(errorMiddleware);//usamos el middleware de error en toda la app
 app.use(notFoundMiddleware); //Usamos el middleware de notfound para ruta no encontrada
+app.use(errorMiddleware);//usamos el middleware de error en toda la app
+
 
 //conectar a la base de datos
 dbConnect().then(() =>{
